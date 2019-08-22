@@ -1,6 +1,7 @@
 package com.curso.mc;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,22 @@ import com.curso.mc.domain.Cidade;
 import com.curso.mc.domain.Cliente;
 import com.curso.mc.domain.Endereco;
 import com.curso.mc.domain.Estado;
+import com.curso.mc.domain.ItemPedido;
+import com.curso.mc.domain.Pagamento;
+import com.curso.mc.domain.PagamentoComBoleto;
+import com.curso.mc.domain.PagamentoComCartao;
+import com.curso.mc.domain.Pedido;
 import com.curso.mc.domain.Produto;
+import com.curso.mc.domain.enums.EstadoPagamento;
 import com.curso.mc.domain.enums.TipoCliente;
 import com.curso.mc.repository.CategoriaRepository;
 import com.curso.mc.repository.CidadeRepository;
 import com.curso.mc.repository.ClienteRepository;
 import com.curso.mc.repository.EnderecoRepository;
 import com.curso.mc.repository.EstadoRepository;
+import com.curso.mc.repository.ItemPedidoRepository;
+import com.curso.mc.repository.PagamentoRepository;
+import com.curso.mc.repository.PedidoRepository;
 import com.curso.mc.repository.ProdutoRepository;
 
 @SpringBootApplication
@@ -42,6 +52,14 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	//https://github.com/acenelio/springboot2-ionic-backend
 	public static void main(String[] args) {
@@ -61,9 +79,9 @@ public class CursomcApplication implements CommandLineRunner {
 		//categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		
 		
-		Produto p1 = new Produto(null, "Computador", new BigDecimal(200.00));
-		Produto p2 = new Produto(null, "Impressora", new BigDecimal(800.00));
-		Produto p3 = new Produto(null, "Mouse", new BigDecimal(80.00));
+		Produto p1 = new Produto(null, "Computador", 200.00);
+		Produto p2 = new Produto(null, "Impressora",800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
 
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
@@ -88,7 +106,7 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, "123456");
 
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
@@ -99,6 +117,36 @@ public class CursomcApplication implements CommandLineRunner {
 
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 		
 		System.out.println("---------------------------------");
