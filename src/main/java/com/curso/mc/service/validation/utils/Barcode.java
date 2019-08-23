@@ -5,15 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * This class validate a barcode and convert it to "Linha Digitável".
- *
- * @author adriano
- * @since Set 25, 2014
- */
-public final class BarcodeUtils {
+//Fonte: https://gist.github.com/adrianoluis/5043397d378ae506d87366abb0ab4e30
+public final class Barcode {
 
-    private BarcodeUtils() {
+    private Barcode() {
     }
 
     /**
@@ -206,6 +201,9 @@ public final class BarcodeUtils {
         return value;
     }
 
+    /*
+     * 
+     */
     public static String mod10(String number) {
         // XXX important to reverse the string
         number = new StringBuffer(number).reverse().toString();
@@ -240,6 +238,11 @@ public final class BarcodeUtils {
         return String.valueOf(digit);
     }
 
+    /**
+     * 
+     * @param number
+     * @return
+     */
     public static String mod11(String number) {
         // XXX important to reverse the string
         number = new StringBuffer(number).reverse().toString();

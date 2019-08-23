@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
-import com.curso.mc.service.validation.utils.BarcodeUtils;
+import com.curso.mc.service.validation.utils.Barcode;
 
 public class BarcodeUtilsTest {
 
@@ -19,7 +19,7 @@ public class BarcodeUtilsTest {
 		final String barcode = "23791620800000586754150094900407757300003200";
 		final String expected = "23794.15009 94900.407753 73000.032000 1 62080000058675";
 
-		final String typefulLine = BarcodeUtils.toTypefulLine(barcode);
+		final String typefulLine = Barcode.toTypefulLine(barcode);
 		assertEquals(expected, typefulLine);
 	}
 
@@ -28,7 +28,7 @@ public class BarcodeUtilsTest {
 		final String barcode = "81770000000010936599704113107970300143370831";
 		final String expected = "81770000000-0 01093659970-2 41131079703-9 00143370831-8";
 
-		final String typefulLine = BarcodeUtils.toTypefulLine(barcode);
+		final String typefulLine = Barcode.toTypefulLine(barcode);
 		assertEquals(expected, typefulLine);
 	}
 
@@ -37,7 +37,7 @@ public class BarcodeUtilsTest {
 		final String typefulLine = "23794.15009 94900.407753 73000.032000 1 62080000058675";
 		final String expected = "23791620800000586754150094900407757300003200";
 
-		final String barcode = BarcodeUtils.toBarcode(typefulLine);
+		final String barcode = Barcode.toBarcode(typefulLine);
 		assertEquals(expected, barcode);
 	}
 
@@ -46,7 +46,7 @@ public class BarcodeUtilsTest {
 		final String typefulLine = "81770000000-0 01093659970-2 41131079703-9 00143370831-8";
 		final String expected = "81770000000010936599704113107970300143370831";
 
-		final String barcode = BarcodeUtils.toBarcode(typefulLine);
+		final String barcode = Barcode.toBarcode(typefulLine);
 		assertEquals(expected, barcode);
 	}
 
@@ -57,7 +57,7 @@ public class BarcodeUtilsTest {
 
 		final String typefulLine = "23794.15009 94900.407753 73000.032000 1 62080000058675";
 
-		final Date expiresAt = BarcodeUtils.expiresAt(typefulLine);
+		final Date expiresAt = Barcode.expiresAt(typefulLine);
 		assertEquals(expected, expiresAt);
 	}
 
@@ -68,7 +68,7 @@ public class BarcodeUtilsTest {
 
 		final String barcode = "23791620800000586754150094900407757300003200";
 
-		final Date expiresAt = BarcodeUtils.expiresAt(barcode);
+		final Date expiresAt = Barcode.expiresAt(barcode);
 		assertEquals(expected, expiresAt);
 	}
 
@@ -78,7 +78,7 @@ public class BarcodeUtilsTest {
 
 		final String typefulLine = "23794.15009 94900.407753 73000.032000 1 62080000058675";
 
-		final double documentValue = BarcodeUtils.documentValue(typefulLine);
+		final double documentValue = Barcode.documentValue(typefulLine);
 		assertEquals(expected, documentValue);
 	}
 
@@ -88,7 +88,7 @@ public class BarcodeUtilsTest {
 
 		final String barcode = "23791620800000586754150094900407757300003200";
 
-		final double documentValue = BarcodeUtils.documentValue(barcode);
+		final double documentValue = Barcode.documentValue(barcode);
 		assertEquals(expected, documentValue);
 	}
 
@@ -98,7 +98,7 @@ public class BarcodeUtilsTest {
 
 		final String typefulLine = "81770000000-0 01093659970-2 41131079703-9 00143370831-8";
 
-		final double documentValue = BarcodeUtils.documentValue(typefulLine);
+		final double documentValue = Barcode.documentValue(typefulLine);
 		assertEquals(expected, documentValue);
 	}
 
@@ -108,7 +108,7 @@ public class BarcodeUtilsTest {
 
 		final String barcode = "81770000000010936599704113107970300143370831";
 
-		final double documentValue = BarcodeUtils.documentValue(barcode);
+		final double documentValue = Barcode.documentValue(barcode);
 		assertEquals(expected, documentValue);
 	}
 
@@ -116,7 +116,7 @@ public class BarcodeUtilsTest {
 	public void testIsValidDocketDocumentTrue() throws Throwable {
 		final String typefulLine = "23794.15009 94900.407753 73000.032000 1 62080000058675";
 
-		final boolean isValidContractDocument = BarcodeUtils.isValidDocketDocument(typefulLine);
+		final boolean isValidContractDocument = Barcode.isValidDocketDocument(typefulLine);
 		assertTrue(isValidContractDocument);
 	}
 
@@ -124,7 +124,7 @@ public class BarcodeUtilsTest {
 	public void testIsValidDocketDocumentFalse() throws Throwable {
 		final String typefulLine = "23791.15009 94900.407753 73000.032000 1 62080000058675";
 
-		final boolean isValidContractDocument = BarcodeUtils.isValidDocketDocument(typefulLine);
+		final boolean isValidContractDocument = Barcode.isValidDocketDocument(typefulLine);
 		assertFalse(isValidContractDocument);
 	}
 
@@ -132,7 +132,7 @@ public class BarcodeUtilsTest {
 	public void testIsValidContratDocumentTrue() throws Throwable {
 		final String typefulLine = "81770000000-0 01093659970-2 41131079703-9 00143370831-8";
 
-		final boolean isValidContractDocument = BarcodeUtils.isValidContractDocument(typefulLine);
+		final boolean isValidContractDocument = Barcode.isValidContractDocument(typefulLine);
 		assertTrue(isValidContractDocument);
 	}
 
@@ -140,7 +140,7 @@ public class BarcodeUtilsTest {
 	public void testIsValidContratDocumentFalse() throws Throwable {
 		final String typefulLine = "81770000000-0 01093659970-2 41131079703-9 00143370831-1";
 
-		final boolean isValidContractDocument = BarcodeUtils.isValidContractDocument(typefulLine);
+		final boolean isValidContractDocument = Barcode.isValidContractDocument(typefulLine);
 		assertFalse(isValidContractDocument);
 	}
 

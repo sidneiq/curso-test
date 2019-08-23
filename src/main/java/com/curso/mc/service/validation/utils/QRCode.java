@@ -8,7 +8,8 @@ package com.curso.mc.service.validation.utils;
 //import com.google.zxing.WriterException;
 //import com.google.zxing.common.BitMatrix;
 
-public class QRCodeUtil {
+//Fonte: https://gist.github.com/adrianoluis/5043397d378ae506d87366abb0ab4e30
+public class QRCode {
 
     /*private QRCodeUtil() {}
 
