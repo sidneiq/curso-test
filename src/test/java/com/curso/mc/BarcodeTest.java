@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.curso.mc.service.validation.utils.Barcode;
 
-public class BarcodeUtilsTest {
+public class BarcodeTest {
 
 	@Test
 	public void testToTypefulLine47() throws Throwable {
