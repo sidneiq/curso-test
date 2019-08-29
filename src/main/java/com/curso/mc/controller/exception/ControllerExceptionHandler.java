@@ -9,7 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.curso.mc.service.exception.AuthorizationException;
 import com.curso.mc.service.exception.DataIntegrityException;
+import com.curso.mc.service.exception.FileException;
 import com.curso.mc.service.exception.ObjectNotFoundException;
 
 //import com.amazonaws.AmazonClientException;
@@ -43,7 +45,7 @@ public class ControllerExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 
-	/*@ExceptionHandler(AuthorizationException.class)
+	@ExceptionHandler(AuthorizationException.class)
 	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
 		
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso negado", e.getMessage(), request.getRequestURI());
@@ -57,7 +59,7 @@ public class ControllerExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 
-	@ExceptionHandler(AmazonServiceException.class)
+	/*@ExceptionHandler(AmazonServiceException.class)
 	public ResponseEntity<StandardError> amazonService(AmazonServiceException e, HttpServletRequest request) {
 		
 		HttpStatus code = HttpStatus.valueOf(e.getErrorCode());
