@@ -9,6 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.curso.mc.service.exception.AuthorizationException;
 import com.curso.mc.service.exception.DataIntegrityException;
 import com.curso.mc.service.exception.FileException;
@@ -59,7 +62,7 @@ public class ControllerExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 
-	/*@ExceptionHandler(AmazonServiceException.class)
+	@ExceptionHandler(AmazonServiceException.class)
 	public ResponseEntity<StandardError> amazonService(AmazonServiceException e, HttpServletRequest request) {
 		
 		HttpStatus code = HttpStatus.valueOf(e.getErrorCode());
@@ -79,5 +82,5 @@ public class ControllerExceptionHandler {
 		
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro S3", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-	}*/
+	}
 }
